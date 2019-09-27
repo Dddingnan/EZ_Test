@@ -7,10 +7,6 @@ In the project directory, you can run:
 ### `npm install`
 ### `npm run start`
 
-
-## Hope you Enjoy the trip.
-
-
 ## Refer
 
 ### `npm start`
