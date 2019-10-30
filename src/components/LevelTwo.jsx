@@ -165,8 +165,12 @@ class LevelTwo extends Component {
       }
 
     sendData(e) {
+        const {
+            setListData,
+          } = this.props;
         if (this.state.inputVal) {
             // from here
+            setListData(this.state.inputVal);
             this.setState({
                 inputVal: '',
             });
@@ -177,6 +181,9 @@ class LevelTwo extends Component {
   render() {
       const {
         listDate,
+        getWeather,
+        getAirportInfo,
+        loadingShow,
       } = this.props;
     return (
         <form style={styles.wrap} onSubmit={e => this.sendData(e)}>
@@ -213,6 +220,10 @@ class LevelTwo extends Component {
                     <div style={styles.flexCon}>
                         <button
                             type="button"
+                            onClick={() => {
+                                loadingShow();
+                                getWeather();
+                            }}
                             style={styles.downBtn}>
                             Today's Weather
                         </button>
@@ -221,6 +232,10 @@ class LevelTwo extends Component {
                     <div style={styles.flexCon}>
                         <button
                             type="button"
+                            onClick={() => {
+                                loadingShow();
+                                getAirportInfo();
+                            }}
                             style={styles.downBtn}>
                             Airport's Info
                         </button>

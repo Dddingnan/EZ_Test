@@ -29,16 +29,35 @@ const styles = {
 };
 
 class Home extends Component {
+  jumpPage(page) {
+    const {
+        history,
+    } = this.props;
+    switch (page) {
+        case 1:
+            history.push('/LevelOne');
+            break;
+        case 2:
+            history.push('/LevelTwo');
+            break;
+        case 3:
+            history.push('/LevelThree');
+            break;
+        default:
+            break;
+    }
+  }
+
   render() {
     return (
         <div style={styles.content}>
-            <h2 style={styles.text}>
+            <h2 onClick={() => this.jumpPage(1)} style={styles.text}>
                 To do list
             </h2>
-            <h2 style={styles.text}>
+            <h2 onClick={() => this.jumpPage(2)} style={styles.text}>
                 Easy chat
             </h2>
-            <h2 style={styles.text}>
+            <h2 onClick={() => this.jumpPage(3)} style={styles.text}>
                 Satellite map
             </h2>
         </div>

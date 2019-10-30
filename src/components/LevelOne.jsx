@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
-import { setFalse } from '../actions/LevelOne';
+// import { setInputValue, setListData,  } from '../actions/LevelOne';
 import * as LevelOneActions from '../actions/LevelOne';
 
 const styles = {
@@ -72,12 +72,35 @@ const styles = {
 };
 
 class LevelOne extends Component {
+    constructor() {
+        super();
+        this.state = {
+            inputVal: '',
+        };
+    }
+    setInputVal(e) {
+        this.props.setInputValue(e.target.value);
+    }
+
+    sendData() {
+        const {
+            setListData,
+            inputVal,
+          } = this.props;
+          setListData(inputVal);
+    }
+
+    clearData() {
+        const {
+            clearListData,
+          } = this.props;
+          clearListData();
+    }
   render() {
-      const fakeData = [
-          'Welcome To Level One',
-          'You will learn basic redux !',
-          'Congratulations.'
-      ];
+      const {
+        listDate,
+        inputVal,
+      } = this.props;
     return (
         <div style={styles.wrap}>
             <div style={styles.subContent}>
@@ -86,17 +109,21 @@ class LevelOne extends Component {
                 </h2>
                 <input
                     type="text"
+                    value={inputVal}
                     placeholder="Type Something..."
+                    onChange={e => this.setInputVal(e)}
                     style={styles.input}>
                 </input>
                 <div style={styles.flex}>
                     <button
                         type="button"
+                        onClick={() => this.sendData()}
                         style={styles.btn}>
                         Send
                     </button>
                     <button
                         type="button"
+                        onClick={() => this.clearData()}
                         style={styles.btn}>
                         clear
                     </button>
@@ -109,7 +136,7 @@ class LevelOne extends Component {
                 </h2>
                 <div style={styles.border} />
                 <div style={styles.listContent}>
-                    {fakeData.map((val, key) =>
+                    {listDate.map((val, key) =>
                         <Fragment key={`${val}_${key}`}>
                             <div style={styles.listText}>
                                 {val}
@@ -125,4 +152,16 @@ class LevelOne extends Component {
   }
 }
 
-export default LevelOne;
+const reduxHook = connect(
+    state => ({
+        listDate: state.LevelOne.listDate,
+        inputVal: state.LevelOne.inputValue,
+    }),
+    dispatch => bindActionCreators({
+        ...LevelOneActions,
+    }, dispatch),
+);
+
+export default compose(
+    reduxHook,
+)(LevelOne);
